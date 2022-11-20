@@ -116,7 +116,7 @@ function buildBarChart(sampleId) {
       };
       // 9. Create the layout for the bar chart.
       var barLayout = {
-          title: "Top 10 Bacterial Cultures Found",
+          title: "<B>Top 10 Bacterial Cultures Found</B>",
           margin: {t: 30, l: 150}
             };
 
@@ -152,8 +152,15 @@ function buildBubbleChart(sampleID) {
         }
 
         var bubbleLayout = {
-            title: "Bacteria Cultures Per Sample",
-            xaxis: {title: "OTU ID"}
+            title: "<B>Bacteria Cultures Per Sample</B>",
+            xaxis: {title: "OTU ID"},
+            margin: {
+                l: 50,
+                 r: 50,
+                b: 100,
+                t: 100,
+                pad: 4
+            },
         }
 
         Plotly.newPlot("bubble",[bubbleData], bubbleLayout)
@@ -170,7 +177,7 @@ function buildGaugeChart(sampleID) {
 
         var gaugeData = {
             value: wfreq ,
-            title: {text: "Scrubs per Week"},
+            title: {text: "<I>Scrubs per Week</I>"},
             mode: "gauge+number", type: "indicator",
             gauge: {axis: {range: [0,10]},
                     bar:{color: 'black'},
@@ -186,7 +193,7 @@ function buildGaugeChart(sampleID) {
         }
 
         var gaugeLayout = {
-            title: "Belly Button Washing Frequency"
+            title: "<B>Belly Button Washing Frequency</B>"
 
         }
 
