@@ -1,44 +1,93 @@
-// Use D3 fetch to read the JSON file
-// The data from the JSON file is arbitrarily named importedData as the argument
-d3.json("data/data.json").then((importedData) => {
-  // console.log(importedData);
-  var data = importedData;
+// LOAD DROP DOWN SAMPLE SELECTOR
+function init() {
+  // Grab a reference to the dropdown select element
+  var selector = d3.select("#selDataset");
 
-  // Sort the data array using the greekSearchResults value
-  data.sort(function(a, b) {
-    return parseFloat(b.greekSearchResults) - parseFloat(a.greekSearchResults);
+  // Use the list of sample names to populate the select options
+  d3.json("samples.json").then((data) => {
+    console.log(data)
+
+    // assign name to array of "names"
+    var sampleNames = data.names;
+
+    // loop through the array of names
+    sampleNames.forEach((sample) => {
+      selector
+        .append("option")
+        .text(sample)
+        .property("value", sample);
+    });
+
+    // Use the first sample from the list to build the initial plots
+
+      var firstSample = sampleNames[0];
+      buildCharts(firstSample);
+      buildMetadata(firstSample);
   });
+}
 
-  // Slice the first 10 objects for plotting
-  data = data.slice(0, 10);
+// Initialize the dashboard
+init();
 
-  // Reverse the array due to Plotly's defaults
-  data = data.reverse();
+function optionChanged(newSample) {
+  // Fetch new data each time a new sample is selected
+  buildMetadata(newSample);
+  buildCharts(newSample);
+  
+}
 
-  // Trace1 for the Greek Data
-  var trace1 = {
-    x: data.map(row => row.greekSearchResults),
-    y: data.map(row => row.greekName),
-    text: data.map(row => row.greekName),
-    name: "Greek",
-    type: "bar",
-    orientation: "h"
-  };
+// Demographics Panel 
+function buildMetadata(sample) {
+  d3.json("samples.json").then((data) => {
+    var metadata = data.metadata;
+    // Filter the data for the object with the desired sample number
+    var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+    var result = resultArray[0];
+    // Use d3 to select the panel with id of `#sample-metadata`
+    var PANEL = d3.select("#sample-metadata");
 
-  // data
-  var chartData = [trace1];
+    // Use `.html("") to clear any existing metadata
+    PANEL.html("");
 
-  // Apply the group bar mode to the layout
-  var layout = {
-    title: "Greek gods search results",
-    margin: {
-      l: 100,
-      r: 100,
-      t: 100,
-      b: 100
-    }
-  };
+    // Use `Object.entries` to add each key and value pair to the panel
+    // Hint: Inside the loop, you will need to use d3 to append new
+    // tags for each key-value in the metadata.
+    Object.entries(result).forEach(([key, value]) => {
+      PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
+    });
 
-  // Render the plot to the div tag with id "plot"
-  Plotly.newPlot("plot", chartData, layout);
-});
+  });
+}
+
+// 1. Create the buildCharts function.
+function buildCharts(sample) {
+  // 2. Use d3.json to load and retrieve the samples.json file 
+  d3.json("samples.json").then((data) => {
+    // 3. Create a variable that holds the samples array. 
+
+    // 4. Create a variable that filters the samples for the object with the desired sample number.
+
+    //  5. Create a variable that holds the first sample in the array.
+
+
+    // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
+
+
+    // 7. Create the yticks for the bar chart.
+    // Hint: Get the the top 10 otu_ids and map them in descending order  
+    //  so the otu_ids with the most bacteria are last. 
+
+    var yticks = 
+
+    // 8. Create the trace for the bar chart. 
+    var barData = [
+      
+    ];
+    // 9. Create the layout for the bar chart. 
+    var barLayout = {
+     
+    };
+    // 10. Use Plotly to plot the data with the layout. 
+    
+  });
+}
