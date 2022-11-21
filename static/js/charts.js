@@ -117,7 +117,7 @@ function buildBarChart(sampleId) {
       // 9. Create the layout for the bar chart.
       var barLayout = {
           title: "<B>Top 10 Bacterial Cultures Found</B>",
-          margin: {t: 30, l: 150}
+          margin: {t: 100, l: 150}
             };
 
       // 10. Use Plotly to plot the data with the layout.
@@ -193,7 +193,8 @@ function buildGaugeChart(sampleID) {
         }
 
         var gaugeLayout = {
-            title: "<B>Belly Button Washing Frequency</B>"
+            title: "<B>Belly Button Washing Frequency</B>",
+             margin: {t: 100, l: 150}
 
         }
 
